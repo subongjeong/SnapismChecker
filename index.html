@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시리얼 넘버 확인</title>
+</head>
+<body>
+    <h1>시리얼 넘버 확인</h1>
+    <label for="serialNumber">시리얼 넘버:</label>
+    <input type="text" id="serialNumber" name="serialNumber">
+    <button id="checkButton">확인</button>
+
+    <h2>응답 결과</h2>
+    <pre id="response"></pre>
+
+    <script>
+        document.getElementById('checkButton').addEventListener('click', function() {
+            const serialNumber = document.getElementById('serialNumber').value;
+            const url = `https://dev-kh-api.snapism.net/User/CheckValidateVisitor?SerialNumber=${serialNumber}`;
+
+            fetch(url)
+                .then(response => response.json()) // JSON 형태로 응답을 받음
+                .then(data => {
+                    document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('response').textContent = '에러 발생: ' + error;
+                });
+        });
+    </script>
+</body>
+</html>
